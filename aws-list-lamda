@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Get a list of all accounts in the organization
+accounts=$(aws organizations list-accounts --output json)
+
+# Loop through each account
+for account in $(echo "$accounts" | jq -r '.Accounts[].Id'); do
+  # Switch to the current account using the --profile option
+  export AWS_PROFILE="arn:aws:organizations::$account"
+
+  # Get a list of all Lambda functions in the current account
+  functions=$(aws lambda list-functions --output json)
+
+  # Print the function names
+  echo "Lambda function names in account $account:"
+  echo "$functions" | jq -r '.Functions[].FunctionName'
+done
