@@ -16,7 +16,7 @@ for account in $(echo "$accounts" | jq -r '.Accounts[].Id'); do
   echo "$instances" | jq -r '.Reservations[].Instances[].InstanceId'
 done
 
-
+#########
 
 # Get a list of all accounts in the organization
 accounts=$(aws organizations list-accounts --output json)
