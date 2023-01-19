@@ -19,3 +19,24 @@ for IMAGE in $IMAGES; do
 done
 
 echo "Base images for all images in registry have been written to output.txt"
+
+
+##########
+
+
+#!/bin/bash
+
+# Get a list of all images in the registry
+images=$(docker images --format "{{.Repository}}:{{.Tag}}")
+
+# Create a file to write the output
+output_file="parent_images.txt"
+touch $output_file
+
+# Iterate through each image and write the parent image to the output file
+for image in $images; do
+  parent=$(docker inspect --format='{{.Parent}}' $image)
+  echo "$image: $parent" >> $output_file
+done
+
+echo "Output written to $output_file"
