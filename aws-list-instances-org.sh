@@ -33,3 +33,8 @@ for account in $(echo "$accounts" | jq -r '.Accounts[].Id'); do
   echo "EC2 instances in account $account:"
   echo "$instances" | jq -r '.Reservations[].Instances[] | select(.InstanceLifecycle != "spot") | select(.Platform != "windows") | .InstanceId'
 done
+
+
+#
+
+jfrog rt s --spec="{\"repo\":\"docker-local\",\"name\":\"myimage\"}" --format json | jq -r '.results[0].docker.base_image'
