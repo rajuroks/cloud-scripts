@@ -47,3 +47,6 @@ echo "Output written to $output_file"
 
 
 curl -X GET -H "Accept: application/json" http://localhost:2375/images/nginx/history
+
+docker history --no-trunc --format '{{.CreatedBy}}' <image> | grep -v '#(nop)' | tac
+
