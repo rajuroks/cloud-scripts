@@ -52,3 +52,33 @@ docker history --no-trunc --format '{{.CreatedBy}}' <image> | grep -v '#(nop)' |
 
 
 docker history --no-trunc $argv  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
+
+
+#######
+
+
+
+#!/bin/bash
+
+# Set the image name
+image_name="nginx"
+
+# Get the image ID
+image_id=$(docker inspect --format='{{.Id}}' $image_name)
+
+# Get the number of layers in the image
+num_layers=$(docker history --format='{{.CreatedBy}}' $image_name | wc -l)
+
+# Loop through each layer
+for ((i=1; i<=$num_layers; i++)); do
+  # Get the layer ID
+  layer_id=$(docker history --format='{{.Id}}' $image_name | head -n $i | tail -n 1)
+
+  # Get the commands used to create the layer
+  commands=$(docker inspect --format='{{json .ContainerConfig.Cmd}}' $layer_id)
+
+  # Display the layer ID and commands
+  echo "Layer ID: $layer_id"
+  echo "Commands: $commands"
+  echo ""
+done
