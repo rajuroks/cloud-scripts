@@ -50,3 +50,5 @@ curl -X GET -H "Accept: application/json" http://localhost:2375/images/nginx/his
 
 docker history --no-trunc --format '{{.CreatedBy}}' <image> | grep -v '#(nop)' | tac
 
+
+docker history --no-trunc $argv  | tac | tr -s ' ' | cut -d " " -f 5- | sed 's,^/bin/sh -c #(nop) ,,g' | sed 's,^/bin/sh -c,RUN,g' | sed 's, && ,\n  & ,g' | sed 's,\s*[0-9]*[\.]*[0-9]*\s*[kMG]*B\s*$,,g' | head -n -1
