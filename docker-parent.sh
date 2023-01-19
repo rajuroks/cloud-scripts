@@ -40,3 +40,10 @@ for image in $images; do
 done
 
 echo "Output written to $output_file"
+
+
+########
+
+
+
+curl -X GET -H "Accept: application/json" http://localhost:2375/images/nginx/history
