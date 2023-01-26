@@ -82,3 +82,14 @@ for ((i=1; i<=$num_layers; i++)); do
   echo "Commands: $commands"
   echo ""
 done
+
+
+resources
+| where type == "microsoft.compute/virtualmachines"
+| extend vm = tostring(id)
+| join (resources
+    | where type == "microsoft.security/securityagents"
+    | where properties.productName == "Azure Security Center for VMs"
+    | extend vm = tostring(properties.virtualMachineId)) on vm
+| project vm, name
+
