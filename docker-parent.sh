@@ -97,7 +97,7 @@ resources
 ####
 
 
-ndex=index1 OR index=index2
+index=index1 OR index=index2
 | eval index=if(index=="index1",1,2)
 | stats values(<field>) as <field> by <unique_field>, index
 | join type=left <unique_field> [search index=index1 OR index=index2 | stats values(<field>) as <field> by <unique_field>, index]
