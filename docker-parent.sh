@@ -96,10 +96,10 @@ resources
 
 ####
 
-
-index=index1 OR index=index2
-| eval index=if(index=="index1",1,2)
-| stats values(<field>) as <field> by <unique_field>, index
-| join type=left <unique_field> [search index=index1 OR index=index2 | stats values(<field>) as <field> by <unique_field>, index]
-| eval missingintl=if(isnull(<field>), <field2>, ""), missinginidefense=if(isnull(<field2>), <field>, "")
-| table <unique_field> index <field> <field2> missingintl missinginidefense
+index=idata OR index=tldata
+| eval index=if(index=="idata",1,2)
+| stats values(key) as key by cve, index
+| join type=left cve [search index=idata | stats values(key) as key by cve]
+| eval missing=if(isnull(key), key2, "")
+| search missing!=""
+| table cve index key key2 missing
