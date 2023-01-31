@@ -103,3 +103,13 @@ index=idata OR index=tldata
 | eval missing=if(isnull(key), key2, "")
 | search missing!=""
 | table cve index key key2 missing
+
+
+
+index=index1 OR index=index2
+| eval index=if(index=="index1",1,2)
+| stats values(<field1>) as <field1> by <field2>, index
+| join type=left <field2> [search index=index1 OR index=index2 | stats values(<field2>) as <field2> by <field1>, index]
+| eval missing=if(isnull(<field2>), <field1>, ""), missing2=if(isnull(<field1>), <field2>, "")
+| search missing!="" OR missing2!=""
+| table <field1> <field2> index missing missing2
