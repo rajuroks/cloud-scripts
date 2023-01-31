@@ -93,3 +93,13 @@ resources
     | extend vm = tostring(properties.virtualMachineId)) on vm
 | project vm, name
 
+
+####
+
+
+ndex=index1 OR index=index2
+| eval index=if(index=="index1",1,2)
+| stats values(<field>) as <field> by <unique_field>, index
+| join type=left <unique_field> [search index=index1 OR index=index2 | stats values(<field>) as <field> by <unique_field>, index]
+| eval missingintl=if(isnull(<field>), <field2>, ""), missinginidefense=if(isnull(<field2>), <field>, "")
+| table <unique_field> index <field> <field2> missingintl missinginidefense
