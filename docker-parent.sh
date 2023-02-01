@@ -113,3 +113,14 @@ index=index1 OR index=index2
 | eval missing=if(isnull(<field2>), <field1>, ""), missing2=if(isnull(<field1>), <field2>, "")
 | search missing!="" OR missing2!=""
 | table <field1> <field2> index missing missing2
+
+
+
+
+index=index1 OR index=index2
+| eval index=if(index=="index1",1,2)
+| stats values(cve) as cve by key, index
+| join type=left cve [search index=index1 OR index=index2 | stats values(key) as key by cve, index]
+| eval missing=if(isnull(key), cve, "")
+| search missing!=""
+| table key cve index missing
