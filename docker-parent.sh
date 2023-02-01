@@ -126,7 +126,9 @@ index=index1
 
 
 
-index=index1
-| stats values(cve) as cve by key
-| where count(eval(index="index1")) > 0 AND count(eval(index="index2")) = 0
+index=index1 OR index=index2
+| eval index2=if(index=="index2", cve, "")
+| stats values(cve) as cve, values(index2) as index2 by key
+| where cve != "" AND index2 == ""
 | table key cve
+
