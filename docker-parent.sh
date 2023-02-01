@@ -116,11 +116,10 @@ index=index1 OR index=index2
 
 
 
-
-index=index1 OR index=index2
-| eval index=if(index=="index1",1,2)
+index=index1
+| eval index=1
 | stats values(cve) as cve by key, index
-| join type=left cve [search index=index1 OR index=index2 | stats values(cve) as cve by key, index]
+| join type=left cve [search index=index2 | stats values(cve) as cve by key, index]
 | eval missing=if(isnull(cve), key, "")
-| search index=1 AND missing!=""
+| search missing!=""
 | table key cve index missing
