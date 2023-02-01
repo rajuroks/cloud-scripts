@@ -123,3 +123,10 @@ index=index1
 | eval missing=if(isnull(cve), key, "")
 | search missing!=""
 | table key cve index missing
+
+
+
+index=index1
+| stats values(cve) as cve by key
+| where count(eval(index="index1")) > 0 AND count(eval(index="index2")) = 0
+| table key cve
