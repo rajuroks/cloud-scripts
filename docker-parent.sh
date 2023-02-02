@@ -128,9 +128,9 @@ index=index1
 
 index=index1
 | eval index=1
-| stats values(cve) as cve by cve, index
-| join type=left cve [inputlookup cve_lookup | stats values(cve) as cve by cve, index]
-| eval missing=if(isnull(cve), cve, "")
+| stats values(cve) as cve_index1 by cve, index
+| join type=left cve [inputlookup cve_lookup | stats values(cve) as cve_lookup by cve, index]
+| eval missing=if(isnull(cve_lookup), cve_index1, "")
 | search missing!=""
-| table cve index missing
+| table cve_index1 index missing
 
