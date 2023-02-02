@@ -126,9 +126,11 @@ index=index1
 
 
 
-index=index1 OR index=index2
-| eval index2=if(index=="index2", cve, "")
-| stats values(cve) as cve, values(index2) as index2 by key
-| where cve != "" AND index2 == ""
-| table key cve
+index=index1
+| eval index=1
+| stats values(cve) as cve by cve, index
+| join type=left cve [inputlookup cve_lookup | stats values(cve) as cve by cve, index]
+| eval missing=if(isnull(cve), cve, "")
+| search missing!=""
+| table cve index missing
 
