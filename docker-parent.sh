@@ -134,3 +134,6 @@ index=index1
 | search missing!=""
 | table cve_index1 index missing
 
+
+index=index1 cve NOT [| inputlookup cve_lookup.csv | fields cve | return $cve] | table cve
+
