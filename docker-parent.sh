@@ -135,6 +135,9 @@ index=index1
 | table cve_index1 index missing
 
 
-index1 sourcetype="cve" | rename cve as cve1 | join type=left cve_key [search index2 sourcetype="key" | fields cve_key] | where isnull(cve_key) | table cve1
-
+index=index1 cve!="" 
+| eval cve_field=cve 
+| join type=left  key=cve_field [search index=index2 key!=""] 
+| where isnull(key) 
+| fields cve_field
 
