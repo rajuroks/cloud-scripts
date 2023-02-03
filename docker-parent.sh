@@ -134,6 +134,7 @@ index=index1
 | search missing!=""
 | table cve_index1 index missing
 
-index=index1 cve NOT [search index=index2 key=$cve$ | fields cve | dedup cve]
+index=index1 | eval cve=if(index=="index1", cve, key) | dedup cve | fields cve | where index="index1" | join type=left cve [search index=index2 | fields key] | where isnull(key) | table cve
+
 
 
