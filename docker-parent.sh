@@ -135,5 +135,6 @@ index=index1
 | table cve_index1 index missing
 
 
-index1 sourcetype="cve" NOT [search index2 sourcetype="key" | rename key as cve_key | fields cve_key]
+index1 sourcetype="cve" | fields cve | search cve NOT [search index2 sourcetype="key" | rename key as cve_key | fields cve_key] | table cve
+
 
