@@ -135,5 +135,5 @@ index=index1
 | table cve_index1 index missing
 
 
-index=index1 cve NOT [| inputlookup cve_lookup.csv | fields cve | return $cve] | table cve
+index1 sourcetype="cve" NOT [search index2 sourcetype="key" | rename key as cve_key | fields cve_key]
 
