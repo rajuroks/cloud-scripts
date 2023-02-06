@@ -116,27 +116,13 @@ index=index1 OR index=index2
 
 
 
-index=index1
-| eval index=1
-| stats values(cve) as cve by key, index
-| join type=left cve [search index=index2 | stats values(cve) as cve by key, index]
-| eval missing=if(isnull(cve), key, "")
-| search missing!=""
-| table key cve index missing
-
-
-
-index=index1
-| eval index=1
-| stats values(cve) as cve_index1 by cve, index
-| join type=left cve [inputlookup cve_lookup | stats values(cve) as cve_lookup by cve, index]
-| eval missing=if(isnull(cve_lookup), cve_index1, "")
-| search missing!=""
-| table cve_index1 index missing
-
-index=index1 A
-| join type=left index=index2 B Key [search index=index2 B | fields Key]
-| where isnull(Key)
-| table CVF
+index=index1 
+| eval cve=cve1 
+| lookup idata.csv CVE as cve OUTPUT NEW as new_cve
+| where isnull(cve) 
+| table cve new_cve
+| rename cve as "Missing values in idata.csv" 
+| table "Missing values in idata.csv", new_cve
+| outputlookup raju
 
 
