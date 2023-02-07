@@ -116,13 +116,10 @@ index=index1 OR index=index2
 
 
 
-index=index1 
-| eval cve=cve1 
-| lookup idata.csv CVE as cve OUTPUT NEW as new_cve
-| where isnull(cve) 
-| table cve new_cve
-| rename cve as "Missing values in idata.csv" 
-| table "Missing values in idata.csv", new_cve
-| outputlookup raju
+index="index1" cve!="" 
+| stats values(cve) as cve_values
+| eval cve_not_in_index2=mvjoin(cve_values, ",", "index2", "key", "!=")
+| where cve_not_in_index2!="" 
+| table cve_not_in_index2
 
 
