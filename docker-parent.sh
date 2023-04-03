@@ -149,5 +149,82 @@ if data:
         print(item)
 else:
     print('Failed to retrieve data from API.')
+    
+    ###########
+    
+    
+    Here is an example of a class in Python:
+
+python
+Copy code
+class Car:
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.mileage = 0
+
+    def drive(self, miles):
+        self.mileage += miles
+
+    def get_description(self):
+        return f"{self.year} {self.make} {self.model}"
+
+    def get_mileage(self):
+        return self.mileage
+In this example, we define a Car class that has four attributes: make, model, year, and mileage. The __init__ method is a constructor that initializes the attributes with the values passed as arguments when the object is created.
+
+The class also has three methods: drive, get_description, and get_mileage. The drive method takes a miles parameter and increments the mileage attribute by that amount. The get_description method returns a string with the car's make, model, and year. The get_mileage method returns the current mileage of the car.
+
+With this class definition, we can create instances of Car objects and call their methods:
+
+python
+Copy code
+my_car = Car("Toyota", "Corolla", 2021)
+my_car.drive(100)
+print(my_car.get_description())
+print(my_car.get_mileage())
+This code creates an instance of a Car object named my_car with a make of "Toyota", a model of "Corolla", and a year of 2021. It then calls the drive method to increment the mileage by 100 miles, and prints the car's description and mileage.
+
+
+
+
+raju.roks@gmail.com
+how the above example used to get car data from api
+To use the Car class to get car data from an API, you would typically write a separate class that handles the API communication and data parsing. Here's an example:
+
+python
+Copy code
+import requests
+
+class CarApi:
+    def __init__(self, api_url):
+        self.api_url = api_url
+
+    def get_car_data(self):
+        response = requests.get(self.api_url)
+        data = response.json()["data"]
+        cars = []
+        for car_data in data:
+            make, model, year, mileage = car_data
+            car = Car(make, model, year)
+            car.drive(mileage)
+            cars.append(car)
+        return cars
+In this example, we define a CarApi class that takes an API URL as an argument when it is instantiated. The get_car_data method sends a GET request to the API URL and parses the JSON response using the json method of the response object.
+
+The method then creates a list of Car objects based on the data returned by the API. For each car data, it extracts the make, model, year, and mileage attributes, creates a new Car object with these attributes using the __init__ method of the Car class, and calls the drive method of the Car object to set the initial mileage. Finally, the method appends the Car object to the cars list and returns it.
+
+To use the CarApi class to get car data from an API, you would instantiate a CarApi object with the API URL, and then call its get_car_data method:
+
+python
+Copy code
+api_url = "https://example.com/api/cars"
+car_api = CarApi(api_url)
+cars = car_api.get_car_data()
+for car in cars:
+    print(car.get_description())
+    print(car.get_mileage())
+This code creates a CarApi object with the API URL and calls its get_car_data method to retrieve the car data. It then iterates over the list of Car objects returned by the method and prints the description and mileage of each car.
 
 
