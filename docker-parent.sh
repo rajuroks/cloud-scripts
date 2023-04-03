@@ -150,6 +150,44 @@ if data:
 else:
     print('Failed to retrieve data from API.')
     
+    
+    
+############# ######
+import requests
+
+class ApiData:
+    def __init__(self, url):
+        self.url = url
+    
+    def get_data(self):
+        response = requests.get(self.url)
+        if response.status_code == 200:
+            json_data = response.json()
+            data = json_data.get('data')
+            if data:
+                for item in data:
+                    value_1 = item[0]
+                    value_2 = item[1]
+                    value_3 = item[2]
+                    value_4 = item[3]
+                    value_5 = item[4]
+                    
+                    print(f"Value 1: {value_1}")
+                    print(f"Value 2: {value_2}")
+                    print(f"Value 3: {value_3}")
+                    print(f"Value 4: {value_4}")
+                    print(f"Value 5: {value_5}")
+                    
+        else:
+            print(f"Error retrieving data. Status code: {response.status_code}")
+        
+api = ApiData('https://example.com/api')
+api.get_data()
+
+
+###########
+#########
+    
     ###########
     
     
