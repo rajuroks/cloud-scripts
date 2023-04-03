@@ -123,3 +123,31 @@ index="index1" cve!=""
 | table cve_not_in_index2
 
 
+
+######
+
+
+import requests
+
+class API:
+    def __init__(self, url):
+        self.url = url
+    
+    def get_data(self):
+        response = requests.get(self.url)
+        if response.status_code == 200:
+            data = response.json()
+            return data['data']
+        else:
+            return None
+
+api_url = 'https://example.com/api/data'
+api = API(api_url)
+data = api.get_data()
+if data:
+    for item in data:
+        print(item)
+else:
+    print('Failed to retrieve data from API.')
+
+
