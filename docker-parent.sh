@@ -284,3 +284,31 @@ m = matrix()
 difference = set(m.values).difference(set(v.values))
 for value in difference:
     print(value)
+    
+    
+    ######
+    
+    
+    
+    # Find the set of values that are in matrix output but not in vad output
+missing_values = matrix_set - vad_set
+
+# Find the set of values that are in both vad and matrix output
+common_values = vad_set & matrix_set
+
+# Find the set of all values in vad and matrix output
+all_values = vad_set | matrix_set
+
+# Print the vad and matrix outputs and the missing values
+print("VAD output:")
+print(vad_output)
+print("Matrix output:")
+print(matrix_output)
+print("Missing values:")
+print(sorted(missing_values))
+
+# Print the common and total values
+print("Common values:")
+print(sorted(common_values))
+print("Total values:")
+print(sorted(all_values))
