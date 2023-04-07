@@ -266,3 +266,21 @@ for car in cars:
 This code creates a CarApi object with the API URL and calls its get_car_data method to retrieve the car data. It then iterates over the list of Car objects returned by the method and prints the description and mileage of each car.
 
 
+
+
+class vad:
+    def __init__(self):
+        self.values = [1, 3, 2, None]
+
+class matrix:
+    def __init__(self):
+        self.values = [1, 2, None]
+
+# Create instances of the two classes
+v = vad()
+m = matrix()
+
+# Compare the two lists and print the values that are in matrix but not in vad
+difference = set(m.values).difference(set(v.values))
+for value in difference:
+    print(value)
