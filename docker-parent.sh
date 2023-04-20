@@ -312,3 +312,35 @@ print("Common values:")
 print(sorted(common_values))
 print("Total values:")
 print(sorted(all_values))
+
+
+###
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diff Values</title>
+</head>
+<body>
+    <h1>Diff Values:</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in diff_values %}
+            <tr>
+                <td>{{ value.value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+This template displays the values in a table with one column (Value). You can customize this template to your needs.
+
+
+
+
+
