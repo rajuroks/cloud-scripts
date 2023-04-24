@@ -318,29 +318,27 @@ print(sorted(all_values))
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Diff Values</title>
+    <title>Difference</title>
 </head>
 <body>
-    <h1>Diff Values:</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for value in diff_values %}
-            <tr>
-                <td>{{ value.value }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <h1>Common Values:</h1>
+    {% for value in common_values %}
+        <p>{{ value }}</p>
+    {% empty %}
+        <p>No common values found.</p>
+    {% endfor %}
+
+    <h1>Missing Values:</h1>
+    {% for value in missing_values %}
+        <p>{{ value }}</p>
+    {% empty %}
+        <p>No missing values found.</p>
+    {% endfor %}
+
+    <h1>Difference:</h1>
+    <p>{{ difference }}</p>
 </body>
 </html>
-This template displays the values in a table with one column (Value). You can customize this template to your needs.
-
-
 
 
 
