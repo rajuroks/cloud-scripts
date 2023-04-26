@@ -313,32 +313,20 @@ print(sorted(common_values))
 print("Total values:")
 print(sorted(all_values))
 
-
-###
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Difference</title>
-</head>
-<body>
-    <h1>Common Values:</h1>
-    {% for value in common_values %}
-        <p>{{ value }}</p>
-    {% empty %}
-        <p>No common values found.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Missing Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for vaddiff in vaddiffs %}
+    <tr>
+      <td>{{ vaddiff.missing_values_str|safe|linebreaksbr }}</td>
+    </tr>
     {% endfor %}
-
-    <h1>Missing Values:</h1>
-    {% for value in missing_values %}
-        <p>{{ value }}</p>
-    {% empty %}
-        <p>No missing values found.</p>
-    {% endfor %}
-
-    <h1>Difference:</h1>
-    <p>{{ difference }}</p>
-</body>
-</html>
+  </tbody>
+</table>
 
 
 
