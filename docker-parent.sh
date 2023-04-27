@@ -314,21 +314,18 @@ print("Total values:")
 print(sorted(all_values))
 
 
-Copy code
-<table>
-  <thead>
-    <tr>
-      <th>Missing Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for vaddiff in missing_values %}
-      <tr>
-        <td>{{ vaddiff.missing_value }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
 
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Missing Values</h1>
+  <ul>
+    {% for vaddiff in missing_values %}
+      <li>{{ vaddiff.missing_value }}</li>
+    {% empty %}
+      <li>No missing values found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
 
 
