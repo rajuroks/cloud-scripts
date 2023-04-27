@@ -329,3 +329,10 @@ print(sorted(all_values))
 {% endblock %}
 
 
+<ul>
+  {% for vaddiff in missing_values %}
+    <li>{{ vaddiff.missing_value.split(':')[1] }}</li>
+  {% endfor %}
+</ul>
+
+
