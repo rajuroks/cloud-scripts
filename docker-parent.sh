@@ -313,30 +313,14 @@ print(sorted(common_values))
 print("Total values:")
 print(sorted(all_values))
 
-{% block content %}
 
-<div>
-  <table>
-    <thead>
-      <tr>
-        <th>Missing Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for v in missing_values %}
-      <tr>
-        <td>{{ v.missing_value }}</td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td>No missing values</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
 
-{% endblock %}
+<h1>Missing Values</h1>
+<ul>
+{% for vaddiff in missing_values %}
+    <li>{{ vaddiff.missing_value }}</li>
+{% endfor %}
+</ul>
 
 
 
