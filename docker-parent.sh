@@ -1,5 +1,5 @@
 #!/bin/bash
-
+=IF(ISNA(VLOOKUP(B1, A:A, 1, FALSE)), B1, "")
 # Set the registry URL
 REGISTRY_URL=myregistry.com
 
