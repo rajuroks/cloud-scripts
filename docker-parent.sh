@@ -290,49 +290,11 @@ for value in difference:
     
     
     
-    # Find the set of values that are in matrix output but not in vad output
-missing_values = matrix_set - vad_set
-
-# Find the set of values that are in both vad and matrix output
-common_values = vad_set & matrix_set
-
-# Find the set of all values in vad and matrix output
-all_values = vad_set | matrix_set
-
-# Print the vad and matrix outputs and the missing values
-print("VAD output:")
-print(vad_output)
-print("Matrix output:")
-print(matrix_output)
-print("Missing values:")
-print(sorted(missing_values))
-
-# Print the common and total values
-print("Common values:")
-print(sorted(common_values))
-print("Total values:")
-print(sorted(all_values))
-
-
-
-{% extends 'base.html' %}
-
-{% block content %}
-  <h1>Missing Values</h1>
-  <ul>
-    {% for vaddiff in missing_values %}
-      <li>{{ vaddiff.missing_value }}</li>
-    {% empty %}
-      <li>No missing values found.</li>
-    {% endfor %}
-  </ul>
-{% endblock %}
-
-
-<ul>
-  {% for vaddiff in missing_values %}
-    <li>{{ vaddiff.missing_value.split(':')[1] }}</li>
-  {% endfor %}
-</ul>
-
+ (index=<index1> sourcetype=<source1>)
+| eval source_type="source1"
+| stats values(*) as * by image
+| where mvcount(cv) > 1
+| join type=inner image [search index=<index2> sourcetype=<source2> | eval source_type="source2"]
+| join type=inner ns [search index=<index2>]
+| table image, cv, ns, id, cluster
 
