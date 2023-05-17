@@ -290,11 +290,13 @@ for value in difference:
     
     
     
- (index=<index1> sourcetype=<source1>)
+(index=<index1> sourcetype=<source1>)
 | eval source_type="source1"
 | stats values(*) as * by image
 | where mvcount(cv) > 1
-| join type=inner image [search index=<index2> sourcetype=<source2> | eval source_type="source2"]
+| append [search index=<index2>]
+| eval source_type=if(index=="<index1>", "source1", "source2")
+| join type=inner image [search index=<index2>]
 | join type=inner ns [search index=<index2>]
 | table image, cv, ns, id, cluster
 
