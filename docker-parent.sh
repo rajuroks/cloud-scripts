@@ -295,3 +295,11 @@ for value in difference:
 | join type=inner image [search index=<index2> | fields image, name]
 | table image, cv, ns, id, cluster
 
+
+
+index=<index1> sourcetype=<source1> OR index=<index1> sourcetype=<source2>
+| stats values(*) as * by image
+| where mvcount(cv) > 1
+| join type=inner image [search index=<index2> | fields image, name]
+| join type=inner ns [search index=<index2> | fields name]
+| table image, cv, ns, id, cluster
