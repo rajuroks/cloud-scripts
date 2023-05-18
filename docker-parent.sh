@@ -289,15 +289,10 @@ for value in difference:
     ######
     
     
-    
-(index=<index1> sourcetype=<source1>) AS source1
-| join type=inner image [search (index=<index1> sourcetype=<source2>) AS source2 | fields image, workl.cluster, workl.ns]
-| join type=inner image [search index=<index2> | fields image, name]
-| table image, cv, ns, id, cluster
-
-
-
-index=<index1> sourcetype=<source1> OR index=<index1> sourcetype=<source2>
+(index=<index1> sourcetype=<source1>)
+| append [search index=<index1> sourcetype=<source2>]
+| spath input=workl.cluster{} output=cluster
+| spath input=workl.ns{} output=ns
 | stats values(*) as * by image
 | where mvcount(cv) > 1
 | join type=inner image [search index=<index2> | fields image, name]
