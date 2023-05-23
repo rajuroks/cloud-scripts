@@ -288,13 +288,9 @@ for value in difference:
     
     ######
     
-| join type=left clusname [ search index=tlindex
-                            | eval matching=if(clus=clusname, "matching", "not matching")
-                            | stats values(clus) as clus by clusname
-                          ]
+| join type=left clusname [search index=uniindex]
+| join type=left clus [search index=tlindex]
 | where isnull(clus)
-| join type=inner clusname [ search index=unins
-                            | stats values(name) as name by clus
-                          ]
+| join type=inner clusname [search index=unins | stats values(name) as name by clus]
 | eval matching="not matching"
 | table clusname, matching, name
