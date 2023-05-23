@@ -288,13 +288,13 @@ for value in difference:
     
     ######
     
-    
-(index=<index1> sourcetype=<source1>)
-| append [search index=<index1> sourcetype=<source2>]
-| spath input=workl.cluster{} output=cluster
-| spath input=workl.ns{} output=ns
-| stats values(*) as * by image
-| where mvcount(cv) > 1
-| join type=inner image [search index=<index2> | fields image, name]
-| join type=inner ns [search index=<index2> | fields name]
-| table image, cv, ns, id, cluster
+| join type=left clusname [ search index=tlindex
+                            | eval matching=if(clus=clusname, "matching", "not matching")
+                            | stats values(clus) as clus by clusname
+                          ]
+| where isnull(clus)
+| join type=inner clusname [ search index=unins
+                            | stats values(name) as name by clus
+                          ]
+| eval matching="not matching"
+| table clusname, matching, name
