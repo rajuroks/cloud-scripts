@@ -306,12 +306,11 @@ sheet = workbook.active
 # Iterate through the rows starting from the second row
 for row in sheet.iter_rows(min_row=2, values_only=True):
     id1 = row[0]
-    id2 = row[1]
+    id2 = str(row[1])
     name = row[2]
     
     # Compare ID1 with ID2
-    if id1 in id2:
+    if str(id1) in id2:
         print("ID1:", id1)
         print("Name:", name)
         print()
-
