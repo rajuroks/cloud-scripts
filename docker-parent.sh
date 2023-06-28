@@ -294,3 +294,6 @@ for value in difference:
 | join type=inner clusname [search index=unins | stats values(name) as name by clus]
 | eval matching="not matching"
 | table clusname, matching, name
+
+=IFERROR(INDEX($C$1:$C$10, MATCH(D1, $D$1:$D$10, 0)), "")
+
