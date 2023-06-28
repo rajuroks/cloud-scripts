@@ -295,5 +295,23 @@ for value in difference:
 | eval matching="not matching"
 | table clusname, matching, name
 
-=IFERROR(INDEX($C$1:$C$10, MATCH(D1, $D$1:$D$10, 0)), "")
+import openpyxl
+
+# Load the Excel workbook
+workbook = openpyxl.load_workbook('your_file_path.xlsx')
+
+# Select the active sheet
+sheet = workbook.active
+
+# Iterate through the rows starting from the second row
+for row in sheet.iter_rows(min_row=2, values_only=True):
+    id1 = row[0]
+    id2 = row[1]
+    name = row[2]
+    
+    # Compare ID1 with ID2
+    if id1 in id2:
+        print("ID1:", id1)
+        print("Name:", name)
+        print()
 
