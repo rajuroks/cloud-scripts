@@ -295,22 +295,10 @@ for value in difference:
 | eval matching="not matching"
 | table clusname, matching, name
 
-import openpyxl
-
-# Load the Excel workbook
-workbook = openpyxl.load_workbook('your_file_path.xlsx')
-
-# Select the active sheet
-sheet = workbook.active
-
-# Iterate through the rows starting from the second row
-for row in sheet.iter_rows(min_row=2, values_only=True):
-    id1 = row[0]
-    id2 = str(row[1])
-    name = row[2]
-    
-    # Compare ID1 with ID2
-    if str(id1) in id2:
-        print("ID1:", id1)
-        print("Name:", name)
-        print()
+#######
+resources
+| where type == "microsoft.containerservice/managedclusters"
+| where resourceGroup startswith "your-resource-group-prefix"
+| extend creationTime = todatetime(properties.createdTime)
+| where creationTime <= datetime(2023-06-21)
+| project name, resourceGroup, location, creationTime
