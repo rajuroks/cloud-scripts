@@ -300,6 +300,10 @@ resources
 | where type == "microsoft.containerservice/managedclusters"
 | where isnotnull(properties.provisioningState) and tostring(properties.provisioningState) == 'Deleted'
 | extend deletionTime = todatetime(properties.deletionTimestamp)
-| project name, resourceGroup, properties, deletionTime
+| project name, resourceGroup, properties, deletionTime+
+
+
+az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete']"
+
 
 ######
