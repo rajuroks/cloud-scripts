@@ -298,7 +298,6 @@ for value in difference:
 #######
 resources
 | where type == "microsoft.containerservice/managedclusters"
-| where resourceGroup startswith "your-resource-group-prefix"
-| extend creationTime = todatetime(properties.createdTime)
-| where creationTime <= datetime(2023-06-21)
-| project name, resourceGroup, location, creationTime
+| project name, resourceGroup, properties
+| extend fqdn = properties.fqdn
+| project name, resourceGroup, fqdn
