@@ -298,6 +298,5 @@ for value in difference:
 #######
 resources
 | where type == "microsoft.containerservice/managedclusters"
+| where isnull(properties.provisioningState) or tostring(properties.provisioningState) == 'Deleted'
 | project name, resourceGroup, properties
-| extend fqdn = properties.fqdn
-| project name, resourceGroup, fqdn
