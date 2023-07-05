@@ -305,12 +305,7 @@ resources
 
 az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete']"
 
-AzureActivity
-| where OperationName == "Microsoft.ContainerService/managedClusters/delete"
-| extend ClusterName = tostring(split(tostring(AddProperties), "resourceName': '")[1])
-| extend ClusterName = split(ClusterName, "', '")[0]
-| extend FQDN = tostring(parse_json(AddProperties).properties.fqdn)
-| extend DeletedTime = TimeGenerated
-| project ClusterName, FQDN, DeletedTime
+az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete'] | [].[properties.resourceId, properties.status.status, properties.eventTimestamp, properties.subStatus.message]"
+
 
 ######
