@@ -298,5 +298,8 @@ for value in difference:
 #######
 resources
 | where type == "microsoft.containerservice/managedclusters"
-| where isnull(properties.provisioningState) or tostring(properties.provisioningState) == 'Deleted'
-| project name, resourceGroup, properties
+| where isnotnull(properties.provisioningState) and tostring(properties.provisioningState) == 'Deleted'
+| extend deletionTime = todatetime(properties.deletionTimestamp)
+| project name, resourceGroup, properties, deletionTime
+
+######
