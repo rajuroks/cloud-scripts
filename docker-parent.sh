@@ -303,9 +303,8 @@ resources
 | project name, resourceGroup, properties, deletionTime+
 
 
-az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete']"
+az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete'].properties.resourceName"
 
-az monitor activity-log list --query "[?operationName.value == 'Microsoft.ContainerService/managedClusters/delete'] | [].[properties.resourceId, properties.status.status, properties.eventTimestamp, properties.subStatus.message]"
 
 
 ######
